@@ -10,7 +10,6 @@ A번째 도시에서 B번째 도시까지 가는데 드는 최소비용을 출�
 #include <algorithm>
 #include <queue>
 #include <cstdint>
-#include <unistd.h>
 using namespace std;
 
 int n,m;
@@ -70,33 +69,30 @@ int main(){
         do{
             tmp=q.top();
             q.pop();
-            sleep(1);
-            cout<<"qsize: "<<q.size()<<" / "<<tmp.path_length<<" "<<v[tmp.index]<<endl;
-            
         }while(tmp.path_length>v[tmp.index] && !q.empty());
         visited[tmp.index]=true;
         int dest, start, cost;
         start=tmp.index;
         
-        cout<<"adj[start]size: "<<adj[start].size()<<endl;
+
         for(int j=0;j<adj[start].size();j++){
-            
+            /*
             for(int k=1;k<=n;k++){
                 if(v[k]==INT64_MAX) cout<<"inf"<<" ";
                 else cout<<v[k]<<" ";
-            }cout<<"\n"<<"i: "<<i<<"\n"<<"q: "<<tmp.index<<","<<tmp.path_length<<" ";
-            
+            }cout<<"\n"<<"i: "<<i++<<"\n"<<"q: "<<tmp.index<<","<<tmp.path_length<<" ";
+            */
             dest=adj[start][j].dest;
             cost=adj[start][j].cost;
-            cout<<"dest: "<<dest<<" cost: "<<cost<<"\n";
-            if(v[dest]>cost + v[start] && v[start]!=INT64_MAX)
+            //cout<<"dest: "<<dest<<" cost: "<<cost<<"\n";
+            if(v[dest]>cost + v[start] && v[start]!=INT64_MAX){
                 v[dest] = cost + v[start];
-            if(visited[dest]==false)        
-                q.push({v[dest],dest});        
-            cout<<endl;
+                if(visited[dest]==false)        
+                    q.push({v[dest],dest});        
+            }
         }
-        i++;
-        sleep(1);
+        
+        
         
     }
    
