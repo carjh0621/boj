@@ -101,7 +101,8 @@ int main(){
         ans1=INT64_MAX;
     }
     
-    
+     
+
 
     tmp=search(1,v2,e);
     if(tmp!=-1){
@@ -129,7 +130,6 @@ int main(){
     long long int ans = min(ans1,ans2);
     if(ans==INT64_MAX) cout<<"-1"<<"\n";
     else cout<<ans<<"\n";
-    //cout<< min(search(1,v1,e)+search(v1,v2,e)+search(v2,N,e), search(1,v2,e)+search(v2,v1,e)+search(v1,N,e))<<"\n";
 
 
 
