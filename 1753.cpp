@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <climits>
+#include <queue>
+#include <utility>
 using namespace std;
 
 
@@ -9,23 +9,49 @@ using namespace std;
 int V,E;
 int K;
 
+struct edge{
+    int dest;
+    int cost;
+};
 
+void search(int s_node, vector<vector<edge>> &e){
+    vector<int> dist(V+1,INT32_MAX);
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
+    pair<int,int> dist_and_index;
+    vector<bool> visited(V+1,false);
 
-void search(vector<vector<int>> &e){
-    for(int k=1;k<=V;k++){
-        for(int i=1;i<=V;i++){
-            for(int j=1;j<=V;j++){
-                if(e[i][k] == INT32_MAX || e[k][j] == INT32_MAX) continue;
-                e[i][j] = min(e[i][j], e[i][k] + e[k][j]);   
-
-            }
+    dist[s_node]=0;
+    dist_and_index.first=dist[s_node];
+    dist_and_index.second=s_node;
+    
+    q.push(dist_and_index);
+    
+    while(!q.empty()){
+        dist_and_index=q.top();
+        q.pop();
+        int cur=dist_and_index.second;
+        if(dist[cur]<dist_and_index.first) continue;
+        visited[cur]=true;
+        //if(cur==d_node) break;
+        for(auto it = e[cur].begin();it!=e[cur].end();it++){
+            if(dist[it->dest] > dist[cur] + it->cost){
+                if(visited[it->dest] == false){
+                    dist[it->dest] = dist[cur] + it->cost;
+                    dist_and_index.first=dist[it->dest];
+                    dist_and_index.second=it->dest;
+                    q.push(dist_and_index);
+                }
+            }  
         }
+
     }
     
     for(int i=1;i<=V;i++){
-        if(e[K][i]==INT32_MAX) cout<<"INF\n";
-        else cout<<e[K][i]<<"\n";
+        if(dist[i]==INT32_MAX) cout<<"INF\n";
+        else cout<<dist[i]<<"\n";
     }
+    
+    
 }
 
 int main(){
@@ -37,19 +63,15 @@ int main(){
 
     cin>>K;
 
-    vector<vector<int>> e(V+1,vector<int> (V+1,INT32_MAX));
-    for(int i=1;i<=V;i++){
-        e[i][i]=0;
-    }
+    vector<vector<edge>> e(V+1);
+
     for(int i=0;i<E;i++){
         int s,d,c;
         cin>>s>>d>>c;
-        if(e[s][d]>c)
-            e[s][d]=c;
+        e[s].push_back({d,c});
     }
-    
-    
-    search(e);
+
+    search(K,e);
 
     return 0;
 }
