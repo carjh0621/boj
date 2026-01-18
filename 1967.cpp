@@ -10,28 +10,36 @@ int n;
 int ans=0;
 struct node{
     bool isleaf=false;
-    int left_child=0;
-    int right_child=0;
-    int left_edge_cost=0;
-    int right_edge_cost=0;
+    vector<pair<int,int>> children; // child, edge_cost
     int diameter = 0;
     int longest_path=0;
 };
 
 void search(int root, vector<node> &tree){
     node& cur = tree[root];
-    if(cur.isleaf==false){
-        search(cur.left_child,tree);
-        search(cur.right_child,tree);
-        cur.longest_path = max(tree[cur.left_child].longest_path + cur.left_edge_cost, 
-                                tree[cur.right_child].longest_path + cur.right_edge_cost);
-        cur.diameter = tree[cur.left_child].longest_path + cur.left_edge_cost + 
-                        tree[cur.right_child].longest_path + cur.right_edge_cost;
-        if(ans<cur.diameter) ans=cur.diameter;
+    if(cur.isleaf==true) return;
+
+    int best1=0, best2=0; // 자식 경로들 중 가장 긴 원투
+    for(int i=0;i<cur.children.size();i++){
+        int c=cur.children[i].first;
+        int w=cur.children[i].second;
+
+        search(c,tree);
+
+        int cand = tree[c].longest_path + w;
+
+        if(cand>best1){
+            best2=best1;
+            best1=cand;
+        }
+        else if(cand>best2){
+            best2=cand;
+        }
     }
-    else{
-        return;
-    }
+
+    cur.longest_path = best1;
+    cur.diameter = best1 + best2;
+    if(ans<cur.diameter) ans=cur.diameter;
 }
 
 
@@ -48,19 +56,12 @@ int main(){
     for(int i=1;i<n;i++){
         int p,c,w;
         cin>>p>>c>>w;
-        if(tree[p].left_child==0) {
-            tree[p].left_child=c;
-            tree[p].left_edge_cost=w;
-        }
-        else{
-            tree[p].right_child=c;
-            tree[p].right_edge_cost=w;
-        }
+        tree[p].children.push_back({c,w});
     }
-    for(int i=0;i<=n;i++){
-        if(tree[i].left_child ==0 && tree[i].right_child==0) 
-            tree[i].isleaf=true;
+    for(int i = 1; i <= n; i++){
+        if(tree[i].children.empty()) tree[i].isleaf = true;
     }
+
     search(1,tree);
     cout<<ans<<"\n";
     
