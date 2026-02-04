@@ -44,6 +44,6 @@
 .vscode/
 
 # Ignore Java Class
-.class
+*.class
 
 build/
