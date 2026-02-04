@@ -43,4 +43,7 @@
 # Ignore the VS Code folder
 .vscode/
 
+# Ignore Java Class
+.class
+
 build/
