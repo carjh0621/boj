@@ -1,9 +1,9 @@
-This repository contains my source codes for algorithmic problems on Baekjoon Online Judge
+이 저장소는 백준에서 풀어본 알고리즘 문제들의 개인 풀이를 모아둔 곳입니다. 문제 번호를 디렉터리나 파일 이름으로 사용하여 문제를 구분하며, 주요 언어로 C++과 Java를 사용했습니다.
 
-I solve problems in a local Linux environment using WSL2 on Windows.
-
-- **OS:** Ubuntu 22.04 LTS (WSL2)
-- **Language:** C++ (g++)
+- **운영체제:** Ubuntu 22.04 LTS (WSL2)
+- **주요 언어:** C++ (g++), Java
 - **Editor:** VS Code
 - **VCS:** Git & GitHub
-  
+
+이 코드들은 개인 학습용으로 작성된 것으로, 모든 풀이가 최적이거나 유일한 해답은 아닙니다.
+새로운 문제 풀이를 추가하거나 기존 코드를 개선하면서 지속적으로 업데이트할 예정입니다.
