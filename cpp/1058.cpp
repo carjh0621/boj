@@ -40,13 +40,19 @@ int main(){
                 }
             }
             if(flag==1){
+                bool is2f=false;
                 for(int x=0;x<a;x++){
                     for(int y=0;y<b;y++){
                         if(arr1[i][x]==arr1[j][y]){
-                            arr2[i].push_back(j);
-                            arr2[j].push_back(i);
+                            is2f=true;
+                            break;
                         }
                     }
+                    if(is2f) break;
+                }
+                if(is2f){
+                    arr2[i].push_back(j);
+                    arr2[j].push_back(i);
                 }
             }
         }
